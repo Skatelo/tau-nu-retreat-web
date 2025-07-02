@@ -2,41 +2,55 @@
 @tailwind components;
 @tailwind utilities;
 
-/* Definition of the design system. All colors, gradients, fonts, etc should be defined here. 
-All colors MUST be HSL.
-*/
+/* Alpha Phi Alpha Fraternity Design System - Black and Gold Theme */
 
 @layer base {
   :root {
-    --background: 0 0% 100%;
-    --foreground: 222.2 84% 4.9%;
+    --background: 0 0% 0%;
+    --foreground: 0 0% 100%;
 
-    --card: 0 0% 100%;
-    --card-foreground: 222.2 84% 4.9%;
+    --card: 0 0% 5%;
+    --card-foreground: 0 0% 100%;
 
-    --popover: 0 0% 100%;
-    --popover-foreground: 222.2 84% 4.9%;
+    --popover: 0 0% 5%;
+    --popover-foreground: 0 0% 100%;
 
-    --primary: 222.2 47.4% 11.2%;
-    --primary-foreground: 210 40% 98%;
+    --primary: 45 72% 51%;
+    --primary-foreground: 0 0% 0%;
 
-    --secondary: 210 40% 96.1%;
-    --secondary-foreground: 222.2 47.4% 11.2%;
+    --secondary: 0 0% 12%;
+    --secondary-foreground: 0 0% 100%;
 
-    --muted: 210 40% 96.1%;
-    --muted-foreground: 215.4 16.3% 46.9%;
+    --muted: 0 0% 15%;
+    --muted-foreground: 0 0% 65%;
 
-    --accent: 210 40% 96.1%;
-    --accent-foreground: 222.2 47.4% 11.2%;
+    --accent: 45 72% 51%;
+    --accent-foreground: 0 0% 0%;
 
     --destructive: 0 84.2% 60.2%;
-    --destructive-foreground: 210 40% 98%;
+    --destructive-foreground: 0 0% 100%;
 
-    --border: 214.3 31.8% 91.4%;
-    --input: 214.3 31.8% 91.4%;
-    --ring: 222.2 84% 4.9%;
+    --border: 45 72% 51%;
+    --input: 0 0% 15%;
+    --ring: 45 72% 51%;
 
     --radius: 0.5rem;
+    
+    /* Custom fraternity colors */
+    --fraternity-gold: 45 72% 51%;
+    --fraternity-black: 0 0% 0%;
+    --fraternity-dark-grey: 0 0% 10%;
+    
+    /* Gradients */
+    --gradient-gold: linear-gradient(135deg, hsl(45 72% 51%), hsl(45 72% 61%));
+    --gradient-dark: linear-gradient(135deg, hsl(0 0% 0%), hsl(0 0% 10%));
+    
+    /* Shadows */
+    --shadow-gold: 0 0 30px hsl(45 72% 51% / 0.3);
+    --shadow-elegant: 0 10px 30px -10px hsl(0 0% 0% / 0.5);
+    
+    /* Animations */
+    --transition-smooth: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 
     --sidebar-background: 0 0% 98%;
 
@@ -100,6 +114,82 @@ All colors MUST be HSL.
   }
 
   body {
-    @apply bg-background text-foreground;
+    @apply bg-background text-foreground overflow-x-hidden;
+    font-family: 'Arial', sans-serif;
+    line-height: 1.6;
+  }
+}
+
+@layer components {
+  /* Loading Animation */
+  .loading-pulse {
+    animation: pulse 2s infinite alternate, rotate 4s infinite linear;
+  }
+  
+  @keyframes pulse {
+    0% { transform: scale(0.9); }
+    100% { transform: scale(1.1); }
+  }
+  
+  @keyframes rotate {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+  }
+  
+  /* Timeline Animation */
+  .timeline-scroll {
+    animation: scrollTimeline 60s linear infinite;
+  }
+  
+  @keyframes scrollTimeline {
+    0% { transform: translateX(0); }
+    100% { transform: translateX(calc(-100% / 2)); }
+  }
+  
+  /* Lineage Animation */
+  .lineage-scroll {
+    animation: scrollLineage 90s linear infinite;
+  }
+  
+  @keyframes scrollLineage {
+    0% { transform: translateX(0); }
+    100% { transform: translateX(calc(-100% + 100vw)); }
+  }
+  
+  /* Hover Effects */
+  .hover-scale {
+    transition: var(--transition-smooth);
+  }
+  
+  .hover-scale:hover {
+    transform: scale(1.05);
+  }
+  
+  .hover-lift {
+    transition: var(--transition-smooth);
+  }
+  
+  .hover-lift:hover {
+    transform: translateY(-3px);
+  }
+  
+  /* Section Title Underline */
+  .section-title::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 100px;
+    height: 3px;
+    background-color: hsl(var(--primary));
+  }
+  
+  /* Mobile Responsiveness for Animations */
+  @media (max-width: 768px) {
+    .timeline-scroll,
+    .lineage-scroll {
+      animation: none;
+    }
   }
 }
