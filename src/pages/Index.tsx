@@ -6,6 +6,7 @@ import Timeline from "@/components/Timeline";
 import LineageGallery from "@/components/LineageGallery";
 import BrotherhoodPhotos from "@/components/BrotherhoodPhotos";
 import Footer from "@/components/Footer";
+import DonationForm from "@/components/DonationForm";
 import { Button } from "@/components/ui/button";
 
 const Index = () => {
@@ -142,20 +143,7 @@ const Index = () => {
               meaningful difference in the communities we are dedicated to serving. Your generosity ensures that 
               we can continue to grow and expand our outreach, making a lasting impact where its needed most.
             </p>
-            <Button 
-              variant="gold" 
-              size="xl" 
-              asChild
-              className="hover-lift"
-            >
-              <a 
-                href="https://docs.google.com/forms/d/e/1FAIpQLSdjQqbRvCtGNCKunbyHglfpF1lI0JRSfT5JPahoHW_RAKoZNw/viewform?usp=sf_link" 
-                target="_blank" 
-                rel="noopener noreferrer"
-              >
-                Donate Now
-              </a>
-            </Button>
+            <DonationForm />
           </div>
         </div>
       </section>
