@@ -38,7 +38,6 @@ const DonationForm = () => {
   };
 
   const initializeSquare = async () => {
-    // Square should already be loaded from the script tag in index.html
     if (!window.Square) {
       throw new Error('Square SDK not loaded');
     }
@@ -71,13 +70,16 @@ const DonationForm = () => {
     try {
       await initializeSquare();
       
-      const payments = window.Square.payments('sq0ap-cWJQiZMGwJKjjqz2Px9Hrg', 'LWV90YJ6MHHK7');
+      // Initialize Square payments with correct format - using sandbox for testing
+      const payments = window.Square.payments('sandbox-sq0idb-cWJQiZMGwJKjjqz2Px9Hrg', 'LWV90YJ6MHHK7');
       const card = await payments.card();
       await card.attach('#card-container');
 
       const result = await card.tokenize();
       
       if (result.status === 'OK') {
+        console.log('Payment token received:', result.token);
+        
         const { data, error } = await supabase.functions.invoke('process-donation', {
           body: {
             amount,
@@ -107,6 +109,7 @@ const DonationForm = () => {
           throw new Error(data.error);
         }
       } else {
+        console.error('Tokenization failed:', result.errors);
         throw new Error(result.errors?.[0]?.message || 'Payment tokenization failed');
       }
     } catch (error: any) {
