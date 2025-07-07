@@ -71,7 +71,7 @@ const DonationForm = () => {
     try {
       await initializeSquare();
       
-      const payments = window.Square.payments('sq0idp-eaN3yV3kJGh_350z0j3t-g', 'LWV90YJ6MHHK7');
+      const payments = window.Square.payments('sq0ap-cWJQiZMGwJKjjqz2Px9Hrg', 'LWV90YJ6MHHK7');
       const card = await payments.card();
       await card.attach('#card-container');
 
