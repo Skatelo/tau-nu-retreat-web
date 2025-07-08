@@ -70,8 +70,8 @@ const DonationForm = () => {
     try {
       await initializeSquare();
       
-      // Initialize Square payments with correct format - using sandbox for testing
-      const payments = window.Square.payments('sandbox-sq0idb-cWJQiZMGwJKjjqz2Px9Hrg', 'LWV90YJ6MHHK7');
+      // Initialize Square payments with production application ID
+      const payments = window.Square.payments('sq0idp-eaN3yV3kJGh_350z0j3t-g', 'LWV90YJ6MHHK7');
       const card = await payments.card();
       await card.attach('#card-container');
 
