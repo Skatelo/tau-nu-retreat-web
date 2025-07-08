@@ -31,6 +31,21 @@ const DonationForm = () => {
     }));
   };
 
+  const sendEmail = async (type: 'confirmation' | 'receipt', additionalData?: any) => {
+    try {
+      await supabase.functions.invoke('send-donation-emails', {
+        body: {
+          type,
+          donor_name: formData.donor_name,
+          donor_email: formData.donor_email,
+          ...additionalData
+        }
+      });
+    } catch (error) {
+      console.error('Email sending failed:', error);
+    }
+  };
+
   const handleAmountSelect = (amount: string) => {
     setFormData(prev => ({
       ...prev,
@@ -44,6 +59,13 @@ const DonationForm = () => {
       initializePayment();
     }
   }, [showForm]);
+
+  // Send confirmation email when form is filled and user has entered email
+  useEffect(() => {
+    if (formData.donor_name && formData.donor_email && formData.donor_name.length > 2 && formData.donor_email.includes('@')) {
+      sendEmail('confirmation');
+    }
+  }, [formData.donor_name, formData.donor_email]);
 
   const initializePayment = async () => {
     const payments = window.Square.payments(
@@ -102,9 +124,15 @@ const DonationForm = () => {
         if (error) throw error;
 
         if (data.success) {
+          // Send receipt email
+          await sendEmail('receipt', {
+            amount,
+            donation_id: data.donation_id
+          });
+
           toast({
             title: "Thank you!",
-            description: `Your donation of $${amount} has been processed successfully.`,
+            description: `Your donation of $${amount} has been processed successfully. Receipt sent to your email.`,
           });
           
           setFormData({
