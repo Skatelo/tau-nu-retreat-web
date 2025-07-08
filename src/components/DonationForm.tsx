@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Button } from "./ui/button";
 import { Input } from "./ui/input";
 import { Label } from "./ui/label";
@@ -20,6 +20,7 @@ const DonationForm = () => {
   });
   const [isLoading, setIsLoading] = useState(false);
   const [showForm, setShowForm] = useState(false);
+  const [cardInstance, setCardInstance] = useState<any>(null);
   const { toast } = useToast();
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -37,10 +38,21 @@ const DonationForm = () => {
     }));
   };
 
-  const initializeSquare = async () => {
-    if (!window.Square) {
-      throw new Error('Square SDK not loaded');
+  // Initialize Square when form shows, not on submit
+  useEffect(() => {
+    if (showForm && window.Square) {
+      initializePayment();
     }
+  }, [showForm]);
+
+  const initializePayment = async () => {
+    const payments = window.Square.payments(
+      'sq0idp-eaN3yV3kJGh_350z0j3t-g',
+      'LWV90YJ6MHHK7'
+    );
+    const card = await payments.card();
+    await card.attach('#card-container');
+    setCardInstance(card); // Store for later tokenization
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -68,14 +80,11 @@ const DonationForm = () => {
     setIsLoading(true);
 
     try {
-      await initializeSquare();
-      
-      // Initialize Square payments with production application ID
-      const payments = window.Square.payments('sq0idp-eaN3yV3kJGh_350z0j3t-g', 'LWV90YJ6MHHK7');
-      const card = await payments.card();
-      await card.attach('#card-container');
+      if (!cardInstance) {
+        throw new Error('Payment card not initialized');
+      }
 
-      const result = await card.tokenize();
+      const result = await cardInstance.tokenize();
       
       if (result.status === 'OK') {
         console.log('Payment token received:', result.token);
