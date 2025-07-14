@@ -1,6 +1,5 @@
 import { useState, useEffect } from "react";
 
-// VideoLoadingScreen Component
 const VideoLoadingScreen = () => {
   const [isLoading, setIsLoading] = useState(true);
   const [isVisible, setIsVisible] = useState(true);
@@ -21,7 +20,7 @@ const VideoLoadingScreen = () => {
     const handleLoad = () => {
       setTimeout(() => {
         setIsLoading(false);
-      }, 100);
+      }, 100); // Reduced delay since we're waiting for video to end
     };
 
     if (document.readyState === 'complete') {
@@ -44,25 +43,20 @@ const VideoLoadingScreen = () => {
       }`}
       style={{ pointerEvents: videoEnded ? 'none' : 'auto' }}
     >
-
-      
       <video
-        key={Date.now()} // Force reload on every refresh
         autoPlay
         muted
         playsInline
-        preload="auto"
         className="absolute inset-0 w-full h-full object-cover"
-        onLoadStart={() => {
-          console.log("Video loading started");
-        }}
-        onCanPlay={() => {
-          console.log("Video can start playing");
-          setIsLoading(false);
-        }}
         onEnded={() => {
           console.log("Video playback ended");
           setVideoEnded(true);
+        }}
+        onCanPlayThrough={() => {
+          console.log("Video ready to play");
+        }}
+        onLoadedData={() => {
+          console.log("Video data loaded");
         }}
         onError={(e) => {
           console.error("Video failed to load:", e);
@@ -72,12 +66,11 @@ const VideoLoadingScreen = () => {
           }, 2000);
         }}
       >
-        <source 
-          src={`/Gorilla_Smashes_Through_Image_Video.mp4?v=${Date.now()}`} 
-          type="video/mp4" 
-        />
+        <source src="/Gorilla_Smashes_Through_Image_Video.mp4" type="video/mp4" />
         Your browser does not support the video tag.
       </video>
     </div>
   );
 };
+
+export default VideoLoadingScreen;
