@@ -71,7 +71,7 @@ const VideoLoadingScreen = () => {
           setVideoReady(true);
         }}
       >
-        <source src="/Tau-Nu-Alphas/Gorilla_Smashes_Through_Image_Video.mp4" type="video/mp4" />
+        <source src="/tau-nu-retreat-web/Gorilla_Smashes_Through_Image_Video.mp4" type="video/mp4" />
         Your browser does not support the video tag.
       </video>
     </div>
