@@ -1,4 +1,4 @@
-import LoadingScreen from "@/components/LoadingScreen";
+import VideoLoadingScreen from "@/components/VideoLoadingScreen";
 import Header from "@/components/Header";
 import HeroSection from "@/components/HeroSection";
 import CountdownTimer from "@/components/CountdownTimer";
@@ -12,7 +12,7 @@ import { Button } from "@/components/ui/button";
 const Index = () => {
   return (
     <div className="min-h-screen bg-background text-foreground">
-      <LoadingScreen />
+      <VideoLoadingScreen />
       <Header />
       <HeroSection />
       
