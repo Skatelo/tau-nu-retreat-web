@@ -42,15 +42,6 @@ const VideoLoadingScreen = () => {
       }`}
       style={{ pointerEvents: (!isLoading && videoReady) ? 'none' : 'auto' }}
     >
-      {/* Fallback content while video loads or if it fails */}
-      <div className="flex items-center justify-center h-full">
-        <div className="text-center">
-          <div className="w-16 h-16 border-4 border-primary border-t-transparent rounded-full animate-spin mx-auto mb-4"></div>
-          <h2 className="text-2xl font-bold text-primary mb-2">Loading...</h2>
-          <p className="text-muted-foreground">Preparing your experience</p>
-        </div>
-      </div>
-      
       <video
         autoPlay
         muted
