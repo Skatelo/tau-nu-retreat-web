@@ -42,12 +42,21 @@ const VideoLoadingScreen = () => {
       }`}
       style={{ pointerEvents: (!isLoading && videoReady) ? 'none' : 'auto' }}
     >
+      {/* Fallback content while video loads or if it fails */}
+      <div className="flex items-center justify-center h-full">
+        <div className="text-center">
+          <div className="w-16 h-16 border-4 border-primary border-t-transparent rounded-full animate-spin mx-auto mb-4"></div>
+          <h2 className="text-2xl font-bold text-primary mb-2">Loading...</h2>
+          <p className="text-muted-foreground">Preparing your experience</p>
+        </div>
+      </div>
+      
       <video
         autoPlay
         muted
         loop
         playsInline
-        className="w-full h-full object-cover"
+        className="absolute inset-0 w-full h-full object-cover"
         onCanPlayThrough={() => {
           console.log("Video ready to play");
           setVideoReady(true);
@@ -56,9 +65,10 @@ const VideoLoadingScreen = () => {
           console.log("Video data loaded");
         }}
         onError={(e) => {
-          console.error("Video failed to load:", e);
-          // Fallback: hide loading screen if video fails
-          setVideoReady(true); // Set as "ready" to hide the screen
+          console.error("Video failed to load, using fallback");
+          console.log("Video path attempted:", "/Tau-Nu-Alphas/Gorilla_Smashes_Through_Image_Video.mp4");
+          // Keep the loading screen visible with fallback content
+          setVideoReady(true);
         }}
       >
         <source src="/Tau-Nu-Alphas/Gorilla_Smashes_Through_Image_Video.mp4" type="video/mp4" />
