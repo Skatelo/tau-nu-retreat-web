@@ -1,4 +1,4 @@
-import VideoLoadingScreen from "@/components/VideoLoadingScreen";
+import VideoLoadingScreen from "../components/VideoLoadingScreen";
 import Header from "@/components/Header";
 import HeroSection from "@/components/HeroSection";
 import CountdownTimer from "@/components/CountdownTimer";
