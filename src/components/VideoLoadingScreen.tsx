@@ -12,7 +12,7 @@ const VideoLoadingScreen = () => {
       // Start fade out immediately when video ends
       setTimeout(() => {
         setIsVisible(false);
-      }, 500);
+      }, 250);
     }
   }, [videoEnded]);
 
@@ -39,7 +39,7 @@ const VideoLoadingScreen = () => {
 
   return (
     <div 
-      className={`fixed inset-0 z-[9999] bg-black transition-opacity duration-1000 ${
+      className={`fixed inset-0 z-[9999] bg-black transition-opacity duration-500 ${
         videoEnded ? 'opacity-0' : 'opacity-100'
       }`}
       style={{ pointerEvents: videoEnded ? 'none' : 'auto' }}
